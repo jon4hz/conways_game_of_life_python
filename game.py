@@ -93,5 +93,5 @@ if __name__ == "__main__":
     fig, ax = plt.subplots()
     img = ax.imshow(universe)
 
-    ani = animation.FuncAnimation(fig, simulate_life, fargs=(img, universe), interval=500)
+    ani = animation.FuncAnimation(fig, simulate_life, fargs=(img, universe), interval=100)
     plt.show()
