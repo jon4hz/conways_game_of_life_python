@@ -71,7 +71,7 @@ def apply_rules(universe, x, y) -> int:
         return universe[x, y]
     
 
-def simulate_life(frameNum, img, universe) -> np.array:
+def simulate_life(frameNum, img, universe):
     next_universe = np.copy(universe)
     for i in range(universe.shape[0]):
         for j in range(universe.shape[1]):
@@ -84,11 +84,11 @@ def simulate_life(frameNum, img, universe) -> np.array:
     
 
 if __name__ == "__main__":
-    N = 18
+    N = 100
     
     universe = np.zeros((N, N))
-    seed = 'pentadecathlon'
-    universe[4:len(seeds.get(seed))+4,4:len(seeds.get(seed)[0])+4] = seeds.get(seed)
+    seed = 'glider_gun'
+    universe[1:len(seeds.get(seed))+1,1:len(seeds.get(seed)[0])+1] = seeds.get(seed)
     
     fig, ax = plt.subplots()
     img = ax.imshow(universe)
