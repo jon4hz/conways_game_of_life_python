@@ -5,6 +5,9 @@
 # Desc: Conways Game of Life, implemented with pygame
 #
 #######################################################################################################################
+# disable support promt
+import os
+os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 import sys, pygame, argparse
 import numpy as np
 # pylint: disable=no-name-in-module
@@ -12,18 +15,19 @@ from pygame.constants import (
     QUIT,
     MOUSEBUTTONDOWN,
     KEYDOWN,
-    K_p
+    K_p, K_c
 )
 # pylint: enable=no-name-in-module
 
 from seeds import seeds
 
 # CONSTANTS
-RECT_SIZE = 10
-SIZE = WIDTH, HEIGHT = 1000, 1000
+RECT_SIZE = 3
+SIZE = WIDTH, HEIGHT = 400, 2000
 WHITE = (200, 200, 200, 255)
 BLACK = (0, 0, 0, 255)
 TITLE = "Conways Game of Life"
+
 
 def build_board(seed) -> pygame.Surface:
     screen = pygame.display.set_mode(SIZE)
@@ -95,12 +99,15 @@ if __name__ == "__main__":
             if seeds[seed].get('seed') == None:
                 raise KeyError
             arr = np.zeros((int(HEIGHT/RECT_SIZE), int(WIDTH/RECT_SIZE)))
-            arr[seeds[seed].get('co')[0]:len(seeds[seed].get('seed'))+seeds[seed].get('co')[0],seeds[seed].get('co')[1]:len(seeds[seed].get('seed')[0])+seeds[seed].get('co')[1]] = seeds[seed].get('seed')
+            try:
+                arr[seeds[seed].get('co')[0]:len(seeds[seed].get('seed'))+seeds[seed].get('co')[0],seeds[seed].get('co')[1]:len(seeds[seed].get('seed')[0])+seeds[seed].get('co')[1]] = seeds[seed].get('seed')
+            except ValueError:
+                raise ValueError('Please create a bigger board if you want to use that seed!')
             # build the inital board
             screen = build_board(arr)
             pygame.display.update()
         except Exception as e:
-            print(e)
+            print(f'Error - {e}')
             screen = build_board(None)
             pygame.display.update()
             universe = np.zeros((int(HEIGHT/RECT_SIZE), int(WIDTH/RECT_SIZE)))
@@ -134,6 +141,11 @@ if __name__ == "__main__":
                         game_status = 1
                     else:
                         game_status = 0
+                # reset board
+                elif event.key == K_c and game_status == 0:
+                    screen = build_board(None)
+                    universe = np.zeros((int(HEIGHT/RECT_SIZE), int(WIDTH/RECT_SIZE)))
+
                         
             if game_status == 0:
                 if event.type == MOUSEBUTTONDOWN:
