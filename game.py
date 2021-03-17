@@ -5,7 +5,7 @@
 # Desc: Conways Game of Life, implemented with pygame
 #
 #######################################################################################################################
-import sys, pygame
+import sys, pygame, argparse
 import numpy as np
 # pylint: disable=no-name-in-module
 from pygame.constants import (
@@ -16,22 +16,37 @@ from pygame.constants import (
 )
 # pylint: enable=no-name-in-module
 
+from seeds import seeds
+
 # CONSTANTS
-RECT_SIZE = 20
+RECT_SIZE = 10
 SIZE = WIDTH, HEIGHT = 1000, 1000
 WHITE = (200, 200, 200, 255)
 BLACK = (0, 0, 0, 255)
 TITLE = "Conways Game of Life"
 
-def build_board() -> pygame.Surface:
+def build_board(seed) -> pygame.Surface:
     screen = pygame.display.set_mode(SIZE)
     pygame.display.set_caption(TITLE)
     screen.fill(WHITE)
     pygame.mouse.set_visible(1)
-    for y in range(HEIGHT):
-        for x in range(WIDTH):
-            rect = pygame.Rect(x*RECT_SIZE, y*RECT_SIZE, RECT_SIZE, RECT_SIZE)
-            pygame.draw.rect(screen, BLACK, rect, 1)
+    if seed is not None and seed.any():
+        for i in range(seed.shape[0]):
+            for j in range(seed.shape[1]):
+                if seed[i, j] == 1:
+                    rect = pygame.Rect(j*RECT_SIZE, i*RECT_SIZE, RECT_SIZE, RECT_SIZE)
+                    pygame.draw.rect(screen, BLACK, rect, 0)
+                    pygame.display.update(rect)
+                elif seed[i, j] == 0:
+                    rect = pygame.Rect(j*RECT_SIZE, i*RECT_SIZE, RECT_SIZE, RECT_SIZE)
+                    pygame.draw.rect(screen, WHITE, rect, 0)
+                    pygame.draw.rect(screen, BLACK, rect, 1)
+                    pygame.display.update(rect)
+    else:
+        for y in range(HEIGHT):
+            for x in range(WIDTH):
+                rect = pygame.Rect(x*RECT_SIZE, y*RECT_SIZE, RECT_SIZE, RECT_SIZE)
+                pygame.draw.rect(screen, BLACK, rect, 1)
     
     return screen
 
@@ -66,22 +81,46 @@ def simulation(universe, screen) -> np.array:
                 pygame.draw.rect(screen, BLACK, rect, 1)
                 pygame.display.update(rect)
     universe[:] = next_universe[:]
-    pygame.time.wait(200)
+    pygame.time.wait(50)
     return universe
 
 if __name__ == "__main__":
-    # build the inital board
-    screen = build_board()
-    pygame.display.update()
+    # argparser
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-s', '--seed', help="set a seed")
+    args = parser.parse_args()
+    if seed := args.seed:
+        try:
+            # make sure seed is available
+            if seeds[seed].get('seed') == None:
+                raise KeyError
+            arr = np.zeros((int(HEIGHT/RECT_SIZE), int(WIDTH/RECT_SIZE)))
+            arr[seeds[seed].get('co')[0]:len(seeds[seed].get('seed'))+seeds[seed].get('co')[0],seeds[seed].get('co')[1]:len(seeds[seed].get('seed')[0])+seeds[seed].get('co')[1]] = seeds[seed].get('seed')
+            # build the inital board
+            screen = build_board(arr)
+            pygame.display.update()
+        except Exception as e:
+            print(e)
+            screen = build_board(None)
+            pygame.display.update()
+            universe = np.zeros((int(HEIGHT/RECT_SIZE), int(WIDTH/RECT_SIZE)))
+    else:
+        screen = build_board(None)
+        pygame.display.update()
+        universe = np.zeros((int(HEIGHT/RECT_SIZE), int(WIDTH/RECT_SIZE)))
 
     # set game status initally to 0
     game_status = 0
 
-    # init numpy with size of the board
-    universe = np.zeros((int(HEIGHT/RECT_SIZE), int(WIDTH/RECT_SIZE)))
+    # init numpy array with size of the board
+    try:
+        universe = np.copy(arr)
+    except NameError:
+        universe = np.zeros((int(HEIGHT/RECT_SIZE), int(WIDTH/RECT_SIZE)))
     # pylint: disable=no-member
     pygame.init()
     # pylint: enable=no-member
+    # start main loop
     while True:
         for event in pygame.event.get():
             if event.type == QUIT:

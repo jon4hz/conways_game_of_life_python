@@ -2,3 +2,4 @@ venv
 *.gif
 test.py
 .vscode
+__pycache__
