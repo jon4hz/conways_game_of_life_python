@@ -22,8 +22,8 @@ from pygame.constants import (
 from seeds import seeds
 
 # CONSTANTS
-RECT_SIZE = 3
-SIZE = WIDTH, HEIGHT = 400, 2000
+RECT_SIZE = 20
+SIZE = WIDTH, HEIGHT = 500, 500
 WHITE = (200, 200, 200, 255)
 BLACK = (0, 0, 0, 255)
 TITLE = "Conways Game of Life"
