@@ -1,3 +1,11 @@
+#!/usr/bin/env python3
+#
+# Author: jon4hz
+# Date: 14.03.20201
+# Desc: PoC for conway's game of life in python
+#
+#######################################################################################################################
+
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
