@@ -113,7 +113,12 @@ if __name__ == "__main__":
                     
         
         if game_status == 1:
+            prev_universe = np.copy(universe)
             universe = simulation(universe, screen)
+            
+            # set game_status automatically to 0 if universe didn't change
+            if (prev_universe==universe).all():
+                game_status = 0
         
         pygame.display.update()
                 
