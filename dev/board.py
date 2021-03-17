@@ -12,6 +12,8 @@ from pygame.constants import (
     QUIT,
     MOUSEBUTTONDOWN
 )
+# pylint: enable=no-name-in-module
+
 # CONSTANTS
 RECT_SIZE = 20
 SIZE = WIDTH, HEIGHT = 500, 500
@@ -20,7 +22,6 @@ BLACK = (0, 0, 0)
 TITLE = "Conways Game of Life"
 
 def build_board() -> pygame.Surface:
-    # pylint: enable=no-name-in-module
     # pylint: disable=no-member
     pygame.init()
     # pylint: enable=no-member
