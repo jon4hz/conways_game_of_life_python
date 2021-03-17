@@ -1,10 +1,26 @@
 # Conway's Game of Life
 A python adaption
 
-## About
+## Prerequisites
+- `python3`
+
+## Installation
+- Clone the repository: `git clone https://github.com/jon4hz/conways_game_of_life_python`
+- Move to the directory: `cd conways_game_of_life_python`
+- Install the dependencies: `python -m pip install -r requirements.txt`
+- Start the game: `python game.py`
+
+## Keybinding
+- `p` for `play` and `pause`
+- `c` to clear the board when the game is paused
+
+## Customization
+[to be added]
+
+## About the Game
 The Game of Life, also known simply as Life, is a cellular automaton devised by the British mathematician John Horton Conway in 1970. It is a zero-player game, meaning that its evolution is determined by its initial state, requiring no further input. One interacts with the Game of Life by creating an initial configuration and observing how it evolves. It is Turing complete and can simulate a universal constructor or any other Turing machine. 
 
-## Rules
+### rules
 The universe of the Game of Life is an infinite, two-dimensional orthogonal grid of square cells, each of which is in one of two possible states, live or dead, (or populated and unpopulated, respectively). Every cell interacts with its eight neighbours, which are the cells that are horizontally, vertically, or diagonally adjacent. At each step in time, the following transitions occur:
 
 - Any live cell with fewer than two live neighbours dies, as if by underpopulation.
@@ -20,5 +36,5 @@ These rules, which compare the behavior of the automaton to real life, can be co
 
 The initial pattern constitutes the seed of the system. The first generation is created by applying the above rules simultaneously to every cell in the seed; births and deaths occur simultaneously, and the discrete moment at which this happens is sometimes called a tick. Each generation is a pure function of the preceding one. The rules continue to be applied repeatedly to create further generations. 
 
-## Source
+### source
 [https://www.wikiwand.com/en/Conway%27s_Game_of_Life](https://www.wikiwand.com/en/Conway%27s_Game_of_Life)
