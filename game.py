@@ -5,7 +5,7 @@
 # Desc: Conways Game of Life, implemented with pygame
 #
 #######################################################################################################################
-# disable support promt
+# disable support prompt
 import os
 os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 import sys, pygame, argparse
