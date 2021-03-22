@@ -146,7 +146,7 @@ if __name__ == "__main__":
                 elif event.key == K_c and game_status == 0:
                     screen = build_board(None)
                     universe = np.zeros((int(HEIGHT/RECT_SIZE), int(WIDTH/RECT_SIZE)))
-
+                    pygame.display.update()
                         
             if game_status == 0:
                 if event.type == MOUSEBUTTONDOWN:
