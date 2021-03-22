@@ -22,8 +22,8 @@ from pygame.constants import (
 from seeds import seeds
 
 # CONSTANTS
-RECT_SIZE = 20
-SIZE = WIDTH, HEIGHT = 500, 500
+RECT_SIZE = 3
+SIZE = WIDTH, HEIGHT = 3000, 3000
 WHITE = (200, 200, 200, 255)
 BLACK = (0, 0, 0, 255)
 TITLE = "Conways Game of Life"
@@ -128,6 +128,7 @@ if __name__ == "__main__":
     pygame.init()
     # pylint: enable=no-member
     # start main loop
+    pygame.display.update()
     while True:
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -156,11 +157,13 @@ if __name__ == "__main__":
                         universe[array_pos[1], array_pos[0]] = 1
                         rect = pygame.Rect(array_pos[0]*RECT_SIZE, array_pos[1]*RECT_SIZE, RECT_SIZE, RECT_SIZE)
                         pygame.draw.rect(screen, BLACK, rect, 0)
+                        pygame.display.update(rect)
                     elif color == BLACK:
                         universe[array_pos[1], array_pos[0]] = 0
                         rect = pygame.Rect(array_pos[0]*RECT_SIZE, array_pos[1]*RECT_SIZE, RECT_SIZE, RECT_SIZE)
                         pygame.draw.rect(screen, WHITE, rect, 0)
                         pygame.draw.rect(screen, BLACK, rect, 1)
+                        pygame.display.update(rect)
                     
         
         if game_status == 1:
@@ -171,5 +174,5 @@ if __name__ == "__main__":
             if (prev_universe==universe).all():
                 game_status = 0
         
-        pygame.display.update()
+        
                 
